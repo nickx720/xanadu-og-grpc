@@ -44,6 +44,7 @@ impl ChatReq for Service {
     type ConnectServerStream = Pin<Box<dyn Stream<Item = Result<Msg,Status>> + Send + Sync + 'static>,>;
 
     async fn connect_server(&self,request: Request<Req>) ->Result<Response<Self::ConnectServerStream>,Status> {
+        dbg!("Hello");
         let name = request.into_inner().user_name;
         let (stream_tx, stream_rx) = mpsc::channel(1);
 

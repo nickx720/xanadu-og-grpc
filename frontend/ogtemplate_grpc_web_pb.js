@@ -29,7 +29,7 @@ proto.ogtemplate = require('./ogtemplate_pb.js');
 proto.ogtemplate.ChatReqClient =
     function(hostname, credentials, options) {
   if (!options) options = {};
-  options['format'] = 'text';
+  options['format'] = 'binary';
 
   /**
    * @private @const {!grpc.web.GrpcWebClientBase} The client
@@ -55,7 +55,7 @@ proto.ogtemplate.ChatReqClient =
 proto.ogtemplate.ChatReqPromiseClient =
     function(hostname, credentials, options) {
   if (!options) options = {};
-  options['format'] = 'text';
+  options['format'] = 'binary';
 
   /**
    * @private @const {!grpc.web.GrpcWebClientBase} The client

@@ -1,11 +1,12 @@
-const {Empty, Msg, Req} = require("./ogtemplate_pb");
+const {Empty, Msg, Req} =require("./ogtemplate_pb");
 const {ChatReqClient} = require("./ogtemplate_grpc_web_pb");
 
 // Here you need input your server IP. Since I am using docker, hardcode
 // here to make it's simple.
-var client = new ChatReqClient("localhost:8080", null, null);
+var client = new ChatReqClient("http://localhost:8080", null, null);
 
 var user_name = prompt("Please input your name:", "test");
+
 
 console.log(user_name);
 

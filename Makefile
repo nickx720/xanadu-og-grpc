@@ -5,4 +5,8 @@ docker-build :
 	docker rm -f envoy &&  docker build -t envoy:v1 .  
 
 docker-run : 
-	docker run -d --name envoy -p 9901:9901 -p 8080:8080 -p 50051:50051 envoy:v1
+	docker run -d --name envoy -p 9901:9901 -p 8080:8080 envoy:v1
+
+
+build-js-npx :
+	cd frontend && rm -rf dist && npx webpack --devtool source-map client.js && cd ../
