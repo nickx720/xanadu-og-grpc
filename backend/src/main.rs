@@ -3,11 +3,12 @@ use std::pin::Pin;
 use std::sync::Arc;
 
 use futures::Stream;
+use rand::Rng;
 use tokio::sync::{RwLock, mpsc};
 use tonic::transport::Server;
 use tonic:: { Request, Response, Status, Streaming};
 use ogtemplate::chat_req_server::{ChatReq,ChatReqServer };
-use ogtemplate::{ Empty,Msg, Req, ResponseArray};
+use ogtemplate::{ Msg, Req, ResponseArray};
 
 pub mod ogtemplate {
     tonic::include_proto!("ogtemplate");
@@ -43,7 +44,6 @@ impl ChatReq for Service {
     type ConnectServerStream = Pin<Box<dyn Stream<Item = Result<Msg,Status>> + Send + Sync + 'static>,>;
 
     async fn connect_server(&self,request: Request<Req>) ->Result<Response<Self::ConnectServerStream>,Status> {
-        dbg!("Hello");
         let name = request.into_inner().user_name;
         let (stream_tx, stream_rx) = mpsc::channel(1);
 
@@ -78,9 +78,8 @@ impl ChatReq for Service {
         let msg = Msg { user_name,content };
         let mut x:Vec<f32> = Vec::with_capacity(5000);
         let mut y:Vec<f32> = Vec::with_capacity(5000);
-        (0..5000).for_each(|i| x.push(rand::random::<f32>()));
-        (0..5000).for_each(|i| y.push(rand::random::<f32>()));
-        dbg!("Response");
+        (0..5000).for_each(|i| x.push(rand::thread_rng().gen_range(0.0..10.0)));
+        (0..5000).for_each(|i| y.push(rand::thread_rng().gen_range(0.0..10.0)));
         Ok(Response::new(ResponseArray{
             x ,
             y,

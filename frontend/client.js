@@ -1,11 +1,12 @@
 const {Empty, Msg, Req} =require("./ogtemplate_pb");
 const {ChatReqClient} = require("./ogtemplate_grpc_web_pb");
+const Plotly = require('plotly.js-dist-min');
 
 // Here you need input your server IP. Since I am using docker, hardcode
 // here to make it's simple.
 var client = new ChatReqClient("http://localhost:8080", null, null);
 
-var user_name = prompt("Please input your name:", "test");
+var user_name = "test";
 
 
 console.log(user_name);
@@ -33,22 +34,34 @@ function sending(name, content) {
     client.sending(req, {}, (err, res) => {
         if (err) {
             console.log(`Unexpected error for sayHello: code = ${err.code}` +
-                        `, message = "${err.message}"`);
+                `, message = "${err.message}"`);
         } else {
             console.log("Send msg successfully!");
-            console.log(res);
+            const { array} = res;
+            const [x,y] = [array[0],array[1]];
+            const trace = {
+                x: [...x],
+                y: [...y],
+                type: 'scatter'
+            };
+            console.log(trace);
+            const layout = {
+                xaxis: {
+                    type: 'log',
+                    autorange: true
+                }
+            };
+            Plotly.react('myDiv',[trace],layout);
         }
     });
 }
 
 connect_to_server(user_name);
-
-window.send = function() {
-    const content = document.getElementById("inputTxt").value;
-    console.log("Input content: " + content);
-    sending(user_name, content);
-    sending(user_name, content);
-
-    document.getElementById("inputTxt").value = "";
-}
+const content = "asd";
+(function() {
+    setInterval(()=>{ 
+        sending(user_name, content)
+    }
+        ,100);
+})();
 
