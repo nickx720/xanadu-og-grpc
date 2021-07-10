@@ -29,7 +29,7 @@ proto.ogtemplate = require('./ogtemplate_pb.js');
 proto.ogtemplate.ChatReqClient =
     function(hostname, credentials, options) {
   if (!options) options = {};
-  options['format'] = 'binary';
+  options['format'] = 'text';
 
   /**
    * @private @const {!grpc.web.GrpcWebClientBase} The client
@@ -55,7 +55,7 @@ proto.ogtemplate.ChatReqClient =
 proto.ogtemplate.ChatReqPromiseClient =
     function(hostname, credentials, options) {
   if (!options) options = {};
-  options['format'] = 'binary';
+  options['format'] = 'text';
 
   /**
    * @private @const {!grpc.web.GrpcWebClientBase} The client
@@ -149,13 +149,13 @@ proto.ogtemplate.ChatReqPromiseClient.prototype.connectServer =
  * @const
  * @type {!grpc.web.MethodDescriptor<
  *   !proto.ogtemplate.Msg,
- *   !proto.ogtemplate.Empty>}
+ *   !proto.ogtemplate.ResponseArray>}
  */
 const methodDescriptor_ChatReq_Sending = new grpc.web.MethodDescriptor(
   '/ogtemplate.ChatReq/Sending',
   grpc.web.MethodType.UNARY,
   proto.ogtemplate.Msg,
-  proto.ogtemplate.Empty,
+  proto.ogtemplate.ResponseArray,
   /**
    * @param {!proto.ogtemplate.Msg} request
    * @return {!Uint8Array}
@@ -163,7 +163,7 @@ const methodDescriptor_ChatReq_Sending = new grpc.web.MethodDescriptor(
   function(request) {
     return request.serializeBinary();
   },
-  proto.ogtemplate.Empty.deserializeBinary
+  proto.ogtemplate.ResponseArray.deserializeBinary
 );
 
 
@@ -171,10 +171,10 @@ const methodDescriptor_ChatReq_Sending = new grpc.web.MethodDescriptor(
  * @const
  * @type {!grpc.web.AbstractClientBase.MethodInfo<
  *   !proto.ogtemplate.Msg,
- *   !proto.ogtemplate.Empty>}
+ *   !proto.ogtemplate.ResponseArray>}
  */
 const methodInfo_ChatReq_Sending = new grpc.web.AbstractClientBase.MethodInfo(
-  proto.ogtemplate.Empty,
+  proto.ogtemplate.ResponseArray,
   /**
    * @param {!proto.ogtemplate.Msg} request
    * @return {!Uint8Array}
@@ -182,7 +182,7 @@ const methodInfo_ChatReq_Sending = new grpc.web.AbstractClientBase.MethodInfo(
   function(request) {
     return request.serializeBinary();
   },
-  proto.ogtemplate.Empty.deserializeBinary
+  proto.ogtemplate.ResponseArray.deserializeBinary
 );
 
 
@@ -191,9 +191,9 @@ const methodInfo_ChatReq_Sending = new grpc.web.AbstractClientBase.MethodInfo(
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.Error, ?proto.ogtemplate.Empty)}
+ * @param {function(?grpc.web.Error, ?proto.ogtemplate.ResponseArray)}
  *     callback The callback function(error, response)
- * @return {!grpc.web.ClientReadableStream<!proto.ogtemplate.Empty>|undefined}
+ * @return {!grpc.web.ClientReadableStream<!proto.ogtemplate.ResponseArray>|undefined}
  *     The XHR Node Readable Stream
  */
 proto.ogtemplate.ChatReqClient.prototype.sending =
@@ -212,7 +212,7 @@ proto.ogtemplate.ChatReqClient.prototype.sending =
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @return {!Promise<!proto.ogtemplate.Empty>}
+ * @return {!Promise<!proto.ogtemplate.ResponseArray>}
  *     Promise that resolves to the response
  */
 proto.ogtemplate.ChatReqPromiseClient.prototype.sending =

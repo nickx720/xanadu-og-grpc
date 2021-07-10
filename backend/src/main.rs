@@ -6,9 +6,8 @@ use futures::Stream;
 use tokio::sync::{RwLock, mpsc};
 use tonic::transport::Server;
 use tonic:: { Request, Response, Status, Streaming};
-
 use ogtemplate::chat_req_server::{ChatReq,ChatReqServer };
-use ogtemplate::{ Empty,Msg, Req};
+use ogtemplate::{ Empty,Msg, Req, ResponseArray};
 
 pub mod ogtemplate {
     tonic::include_proto!("ogtemplate");
@@ -36,7 +35,7 @@ impl Service {
     fn new(shared: Arc<RwLock<Shared>>) -> Self {
         Service{shared }
     }
-    
+
 }
 
 #[tonic::async_trait]
@@ -62,7 +61,7 @@ impl ChatReq for Service {
                         println!(
                             "[Remote] stream tx sending error. Remote {}",
                             &name
-                            );
+                        );
                         shared_clone.write().await.senders.remove(&name);
                     }
                 }
@@ -72,13 +71,20 @@ impl ChatReq for Service {
         Ok(Response::new(Box::pin(tokio_stream::wrappers::ReceiverStream::new(stream_rx),)))
     }
 
-    async fn sending(&self, request:Request<Msg>) ->Result<Response<Empty>,Status> {
+    async fn sending(&self, request:Request<Msg>) ->Result<Response<ResponseArray>,Status> {
         let req_data = request.into_inner();
         let user_name = req_data.user_name;
         let content = req_data.content;
         let msg = Msg { user_name,content };
-
-        Ok(Response::new(Empty{ }))
+        let mut x:Vec<f32> = Vec::with_capacity(5000);
+        let mut y:Vec<f32> = Vec::with_capacity(5000);
+        (0..5000).for_each(|i| x.push(rand::random::<f32>()));
+        (0..5000).for_each(|i| y.push(rand::random::<f32>()));
+        dbg!("Response");
+        Ok(Response::new(ResponseArray{
+            x ,
+            y,
+        }))
     }
 }
 

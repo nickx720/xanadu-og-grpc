@@ -6,6 +6,11 @@ message Msg {
   string content = 2;
 }
 
+message ResponseArray{
+  repeated float x = 1;
+  repeated float y = 2;
+}
+
 message Req {
   string user_name = 1;
 }
@@ -14,5 +19,5 @@ message Empty {}
 
 service ChatReq{
   rpc ConnectServer (Req) returns (stream Msg);
-  rpc Sending (Msg) returns (Empty);
+  rpc Sending (Msg) returns (ResponseArray);
 }  

@@ -25,17 +25,18 @@ function connect_to_server(name) {
     });
 }
 
-function send_msg(name, content) {
+function sending(name, content) {
     const req = new Msg();
     req.setUserName(name);
     req.setContent(content);
 
-    client.sendMsg(req, {}, (err, res) => {
+    client.sending(req, {}, (err, res) => {
         if (err) {
             console.log(`Unexpected error for sayHello: code = ${err.code}` +
                         `, message = "${err.message}"`);
         } else {
             console.log("Send msg successfully!");
+            console.log(res);
         }
     });
 }
@@ -45,7 +46,8 @@ connect_to_server(user_name);
 window.send = function() {
     const content = document.getElementById("inputTxt").value;
     console.log("Input content: " + content);
-    send_msg(user_name, content);
+    sending(user_name, content);
+    sending(user_name, content);
 
     document.getElementById("inputTxt").value = "";
 }
