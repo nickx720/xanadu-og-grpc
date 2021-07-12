@@ -1,5 +1,7 @@
-# Use Tonic as backend with frontend
-https://github.com/marshal-shi/tonic-gRPC-web-chat
-https://medium.com/geekculture/chat-system-by-rust-and-grpc-web-2425104ec2a0
-https://grpc.io/docs/platforms/web/basics/
+# Rust gRPC with grpc-web using webpack
+
+## Steps to run locally
+** Execute `make docker-build && make docker-run` to execute the envoy proxy
+** cd to backend and run `cargo run`
+** open index.html under frontend/ in a browser.
 
