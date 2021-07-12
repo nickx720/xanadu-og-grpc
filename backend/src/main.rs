@@ -14,6 +14,8 @@ pub mod ogtemplate {
     tonic::include_proto!("ogtemplate");
 }
 
+const POINTS: usize = 500;
+
 // Pair of mpsc channel
 #[derive(Debug)]
 struct Shared {
@@ -76,10 +78,13 @@ impl ChatReq for Service {
         let user_name = req_data.user_name;
         let content = req_data.content;
         let msg = Msg { user_name,content };
-        let mut x:Vec<f32> = Vec::with_capacity(10000);
-        let mut y:Vec<f32> = Vec::with_capacity(10000);
-        (0..10000).for_each(|i| x.push(i as f32));
-        (0..10000).for_each(|i| y.push(f32::sin(rand::thread_rng().gen_range(0.0..1.0))));
+        let mut x:Vec<f32> = Vec::with_capacity(POINTS);
+        let mut y:Vec<f32> = Vec::with_capacity(POINTS);
+        (0..POINTS).for_each(|i|{
+            let value = rand::thread_rng().gen_range(0.0..0.5);
+            x.push(i as f32);
+            y.push(f32::sin(value));
+        });
         Ok(Response::new(ResponseArray{
             x ,
             y,
